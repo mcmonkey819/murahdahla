@@ -21,9 +21,12 @@ to manage the database. First install `diesel-cli` by running
 
 `cargo install diesel_cli --no-default-features --features "mysql"`
 
-Put the database URL in your `.env` file. Then run `diesel migration setup`. If the database needs
+Put the database URL in your `.env` file. Then run `diesel setup`. If the database needs
 to be migrated following an update, you must run `diesel migration run` after pulling the update.
 Refer to the MySQL documentation for instructions on setting up a database.
+
+*May need to run the following:
+`sudo apt install libmaria* mariadb-client*`
 
 ## 4. Compile
 
