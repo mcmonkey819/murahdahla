@@ -83,8 +83,11 @@ Copy bot.service into the etc/systemd/system Dicrectory. Modify bot.service to f
 Use the following commands to run bot.service :
 
   `systemctl start bot.service` - start running the bot service
+  
   `systemctl stop bot.service` - stop running bot service
+  
   `systemctl enable bot.service` - add bot.service run to machine startup
+  
   `systemctl disable bot.service` - remove bot.service from run at startup
 
 # Starting and Stopping Races
