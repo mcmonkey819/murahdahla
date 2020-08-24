@@ -7,7 +7,7 @@ Instructions are based on running from Debian Linux Server
 
 Add the following line to the end of your .bashrc file
 
-`export PATH="$HOME/.cargo/bin:$PATH"'
+`export PATH="$HOME/.cargo/bin:$PATH"`
 
 Log out and back into Debian
 
