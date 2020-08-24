@@ -5,9 +5,9 @@ based on the [serenity](https://github.com/serenity-rs/serenity) Rust library.
 
 Instructions are based on running from Debian Linux Server
 
-Add the following line to your .bashrc file
+Add the following line to the end of your .bashrc file
 
-'export PATH="$HOME/.cargo/bin:$PATH"'
+`export PATH="$HOME/.cargo/bin:$PATH"'
 
 Log out and back into Debian
 
