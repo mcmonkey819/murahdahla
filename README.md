@@ -5,6 +5,12 @@ based on the [serenity](https://github.com/serenity-rs/serenity) Rust library.
 
 Instructions are based on running from Debian Linux Server
 
+Add the following line to your .bashrc file
+
+'export PATH="$HOME/.cargo/bin:$PATH"'
+
+Log out and back into Debian
+
 # Setup
 
 Building requires the Rust compiler and Cargo. You can find these in your distro's repo or
