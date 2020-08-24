@@ -16,6 +16,11 @@ Log out and back into Debian
 Building requires the Rust compiler and Cargo. You can find these in your distro's repo or
 they can be installed via [rustup](https://rustup.rs) (the preferred method.) 
 
+Installing Curl on Debian
+  1) Open the terminal application
+  2) Update system, run: `sudo apt update && sudo apt upgrade`
+  3) Install curl on Debian, execute: `sudo apt install curl`
+
 ## 1. Clone this repo
 
 ## 2. Setting up environment variables
