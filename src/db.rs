@@ -81,6 +81,7 @@ pub fn create_submission_entry(
     id: u64,
     time: NaiveTime,
     collection: u8,
+    bonks: u8,
     forfeit: bool,
 ) -> Result<(), Error> {
     use crate::schema::{games::columns::*, leaderboard::columns::runner_id as runner_ids};
@@ -110,6 +111,7 @@ pub fn create_submission_entry(
         runner_name: runner,
         runner_time: time,
         runner_collection: collection,
+        runner_bonks: bonks,
         runner_forfeit: forfeit,
         submission_datetime: current_time,
     };
@@ -135,6 +137,7 @@ pub fn get_leaderboard(
             .cmp(&a.runner_time)
             .reverse()
             .then(b.runner_collection.cmp(&a.runner_collection).reverse())
+            .then(b.runner_bonks.cmp(&a.runner_bonks))
     });
     Ok(all_submissions)
 }
@@ -244,6 +247,7 @@ pub struct NewSubmission<'a> {
     pub runner_name: &'a str,
     pub runner_time: NaiveTime,
     pub runner_collection: u8,
+    pub runner_bonks: u8,
     pub runner_forfeit: bool,
     pub submission_datetime: NaiveDateTime,
 }
@@ -254,6 +258,7 @@ pub struct OldSubmission {
     pub runner_name: String,
     pub runner_time: NaiveTime,
     pub runner_collection: u8,
+    pub runner_bonks: u8,
     pub runner_forfeit: bool,
     pub submission_datetime: NaiveDateTime,
 }

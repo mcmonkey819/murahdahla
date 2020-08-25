@@ -14,6 +14,7 @@ table! {
         runner_name -> Varchar,
         runner_time -> Time,
         runner_collection -> Unsigned<Tinyint>,
+        runner_bonks -> Unsigned<Tinyint>,
         runner_forfeit -> Bool,
         submission_datetime -> Datetime,
     }
