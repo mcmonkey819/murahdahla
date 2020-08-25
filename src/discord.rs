@@ -265,8 +265,8 @@ fn stop(ctx: &mut Context, msg: &Message) -> CommandResult {
         .for_each(|s| {
             leaderboard_string.push_str(
                 format!(
-                    "\n{}) {} - {} - {}/216",
-                    runner_position, s.runner_name, s.runner_time, s.runner_collection
+                    "\n{}) {} - {} - {}/216 - {} bonks",
+                    runner_position, s.runner_name, s.runner_time, s.runner_collection, s.runner_bonks
                 )
                 .as_str(),
             );
@@ -353,8 +353,8 @@ fn refresh(ctx: &Context, guild: &PartialGuild) -> Result<(), BotError> {
         .for_each(|s| {
             leaderboard_string.push_str(
                 format!(
-                    "\n{}) {} - {} - {}/216",
-                    runner_position, s.runner_name, s.runner_time, s.runner_collection
+                    "\n{}) {} - {} - {}/216 - {} bonks",
+                    runner_position, s.runner_name, s.runner_time, s.runner_collection, s.runner_bonks
                 )
                 .as_str(),
             );
@@ -495,11 +495,12 @@ fn process_time_submission(ctx: &Context, msg: &Message) -> Result<(), Submissio
             *runner_id.as_u64(),
             NaiveTime::from_hms(0, 0, 0),
             0,
+            0,
             true,
         )?;
         return Ok(());
     }
-    if maybe_submission.len() != 2 {
+    if (maybe_submission.len() != 2) && (maybe_submission.len() != 3) {
         return Ok(());
     }
 
@@ -526,6 +527,21 @@ fn process_time_submission(ctx: &Context, msg: &Message) -> Result<(), Submissio
             return Ok(());
         }
     };
+
+    let mut submission_bonks: u8 = 0;
+    if maybe_submission.len() > 0 {
+        let maybe_bonks: &str = maybe_submission.remove(0);
+        submission_bonks = match maybe_bonks.parse::<u8>() {
+            Ok(submission_bonks) => submission_bonks,
+            Err(_e) => {
+                info!(
+                    "Processing submission: Number of bonks couldn't be parsed into 8-bit integer: {} : {}",
+                    &msg.author.name, &maybe_bonks
+                );
+                return Ok(());
+            }
+        };
+    }
 
     let mut current_member = match msg.member(ctx) {
         Some(member) => member,
@@ -563,6 +579,7 @@ fn process_time_submission(ctx: &Context, msg: &Message) -> Result<(), Submissio
         *runner_id.as_u64(),
         submission_time,
         submission_collect,
+        submission_bonks,
         false,
     )?;
 
@@ -657,8 +674,8 @@ fn update_leaderboard(ctx: &Context, guild_id: u64) -> Result<(), BotError> {
             if &current_time.timestamp() - s.submission_datetime.timestamp() > 21600 {
                 leaderboard_string.push_str(
                     format!(
-                        "\n{}) {} - {} - {}/216",
-                        runner_position, s.runner_name, s.runner_time, s.runner_collection
+                        "\n{}) {} - {} - {}/216 - {} bonks",
+                        runner_position, s.runner_name, s.runner_time, s.runner_collection, s.runner_bonks
                     )
                     .as_str(),
                 );
@@ -666,8 +683,8 @@ fn update_leaderboard(ctx: &Context, guild_id: u64) -> Result<(), BotError> {
             } else {
                 leaderboard_string.push_str(
                     format!(
-                        "\n{}) *{}* - {} - {}/216",
-                        runner_position, s.runner_name, s.runner_time, s.runner_collection
+                        "\n{}) *{}* - {} - {}/216 - {} bonks",
+                        runner_position, s.runner_name, s.runner_time, s.runner_collection, s.runner_bonks
                     )
                     .as_str(),
                 );
